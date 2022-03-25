@@ -1,9 +1,12 @@
 import React from "react";
 import SearchBar from "./SearchBar";
 import SearchIcon from "./SearchIcon";
-import CloseIcon from "./CloseIcon";
-
-const SearchBarContainer: React.FC<any> = () => {
+interface SearchBarContainerProps {
+  pokemonHandler: (pokemon: string) => void;
+}
+const SearchBarContainer: React.FC<SearchBarContainerProps> = ({
+  pokemonHandler,
+}) => {
   const [showSearchBar, setShowSearchBar] = React.useState<boolean>(false);
 
   const toggleSearchBar = (boolean: boolean) => {

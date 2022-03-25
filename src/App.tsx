@@ -1,10 +1,10 @@
-import SearchBarContainer from "./components/searchbar/SearchBarContainer";
+import PokeWeb from "./components/PokeWeb";
 
 function App() {
   return (
-    <div className="App">
-      <SearchBarContainer />
-    </div>
+    <>
+      <PokeWeb />
+    </>
   );
 }
 

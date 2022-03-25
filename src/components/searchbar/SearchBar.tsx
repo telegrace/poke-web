@@ -60,12 +60,9 @@ const SearchBar: React.FC<SearchBarProps> = ({ toggleSearchBar }) => {
             </li>
           );
         })}
-        {/* need to talk to the api */}
       </div>
     </div>
   );
 };
 
 export default SearchBar;
-
-//abstract this away and make a pop up
