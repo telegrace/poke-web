@@ -10,6 +10,7 @@
 body {
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
+  font-family: monospace;
 }
 /*
   6. Improve media defaults
@@ -49,4 +50,8 @@ h6 {
 #root,
 #__next {
   isolation: isolate;
+}
+
+li {
+  list-style: none;
 }

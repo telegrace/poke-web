@@ -1,9 +1,9 @@
-import SearchBar from "./components/searchBar";
+import SearchBarContainer from "./components/searchbar/SearchBarContainer";
 
 function App() {
   return (
     <div className="App">
-      <SearchBar />
+      <SearchBarContainer />
     </div>
   );
 }
