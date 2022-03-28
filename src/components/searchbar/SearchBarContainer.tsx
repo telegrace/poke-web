@@ -19,7 +19,12 @@ const SearchBarContainer: React.FC<SearchBarContainerProps> = ({
 		container mx-auto py-5 w-3/4"
     >
       {!showSearchBar && <SearchIcon toggleSearchBar={toggleSearchBar} />}
-      {showSearchBar && <SearchBar toggleSearchBar={toggleSearchBar} />}
+      {showSearchBar && (
+        <SearchBar
+          toggleSearchBar={toggleSearchBar}
+          pokemonHandler={pokemonHandler}
+        />
+      )}
     </div>
   );
 };

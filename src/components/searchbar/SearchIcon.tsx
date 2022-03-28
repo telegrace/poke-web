@@ -8,7 +8,7 @@ const SearchIcon: React.FC<SearchIconProps> = ({ toggleSearchBar }) => {
       onClick={() => {
         toggleSearchBar(true);
       }}
-      className="flex justify-end"
+      className="flex justify-end py-5"
     >
       <svg
         className="h-8 w-8 text-blue-500"

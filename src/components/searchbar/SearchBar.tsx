@@ -4,9 +4,13 @@ import CloseIcon from "./CloseIcon";
 
 interface SearchBarProps {
   toggleSearchBar: (boolean: boolean) => void;
+  pokemonHandler: (pokemon: string) => void;
 }
 
-const SearchBar: React.FC<SearchBarProps> = ({ toggleSearchBar }) => {
+const SearchBar: React.FC<SearchBarProps> = ({
+  toggleSearchBar,
+  pokemonHandler,
+}) => {
   const [search, setSearch] = React.useState<string>("Type here");
   const [matches, setMatches] = React.useState<Array<string>>([]);
 
@@ -40,7 +44,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ toggleSearchBar }) => {
 
   // take up the whole screen
   return (
-    <div className="p-8 bg-black text-white">
+    <div className="h-screen p-8 bg-black text-white">
       <CloseIcon toggleSearchBar={toggleSearchBar} />
       <div className="p-8">
         <h1 className="text-5xl">
@@ -54,7 +58,11 @@ const SearchBar: React.FC<SearchBarProps> = ({ toggleSearchBar }) => {
           return (
             <li
               key={`pokemon-${key}`}
-              className="pt-4 text-4xl hover:text-red-500"
+              className="pt-4 text-4xl hover:text-red-500 w-1/3"
+              onClick={() => {
+                pokemonHandler(pokemon);
+                toggleSearchBar(false);
+              }}
             >
               {pokemon}
             </li>
