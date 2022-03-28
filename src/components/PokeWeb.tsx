@@ -56,6 +56,7 @@ const PokeWeb: React.FC<any> = () => {
       {pokemonCardData.name && (
         <PokemonCardContainer pokemonCardData={pokemonCardData} />
       )}
+      {/* If Searchbar no PokemonCard */}
     </>
   );
 };
