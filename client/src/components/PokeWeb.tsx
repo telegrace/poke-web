@@ -14,7 +14,7 @@ const PokeWeb: React.FC<any> = () => {
   let pokemonCardDataFirst = {
     name: "",
   };
-
+  const [showSearchBar, setShowSearchBar] = React.useState<boolean>(false);
   const [pokemon, setPokemon] = React.useState<string>("");
   const [pokemonCardData, setPokemonCardData] =
     React.useState<PokemonCardData>(pokemonCardDataFirst);
@@ -23,7 +23,12 @@ const PokeWeb: React.FC<any> = () => {
     setPokemon(pokemon);
   };
 
+  const toggleSearchBar = (boolean: boolean) => {
+    setShowSearchBar(boolean);
+  };
+
   React.useEffect(() => {
+    // axios.get("http://localhost:3001/");
     axios
       .get(`https://pokeapi.co/api/v2/pokemon/${pokemon.toLowerCase()}`)
       .then(({ data }) => {
@@ -52,8 +57,12 @@ const PokeWeb: React.FC<any> = () => {
   }, [pokemon]);
   return (
     <>
-      <SearchBarContainer pokemonHandler={pokemonHandler} />
-      {pokemonCardData.name && (
+      <SearchBarContainer
+        pokemonHandler={pokemonHandler}
+        showSearchBar={showSearchBar}
+        toggleSearchBar={toggleSearchBar}
+      />
+      {pokemonCardData.name && !showSearchBar && (
         <PokemonCardContainer pokemonCardData={pokemonCardData} />
       )}
       {/* If Searchbar no PokemonCard */}

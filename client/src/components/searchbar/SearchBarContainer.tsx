@@ -3,20 +3,18 @@ import SearchBar from "./SearchBar";
 import SearchIcon from "./SearchIcon";
 interface SearchBarContainerProps {
   pokemonHandler: (pokemon: string) => void;
+  showSearchBar: boolean;
+  toggleSearchBar: (boolean: boolean) => void;
 }
 const SearchBarContainer: React.FC<SearchBarContainerProps> = ({
   pokemonHandler,
+  showSearchBar,
+  toggleSearchBar,
 }) => {
-  const [showSearchBar, setShowSearchBar] = React.useState<boolean>(false);
-
-  const toggleSearchBar = (boolean: boolean) => {
-    setShowSearchBar(boolean);
-  };
-
   return (
     <div
       className=" 
-		container mx-auto py-5 w-3/4"
+		container mx-auto w-3/4"
     >
       {!showSearchBar && <SearchIcon toggleSearchBar={toggleSearchBar} />}
       {showSearchBar && (
