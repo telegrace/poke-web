@@ -28,34 +28,14 @@ const PokeWeb: React.FC<any> = () => {
   };
 
   React.useEffect(() => {
-    axios.get("http://localhost:3001/pokemon").then(({ data }) => {
-      console.log(data);
-    });
-    // axios
-    //   .get(`https://pokeapi.co/api/v2/pokemon/${pokemon.toLowerCase()}`)
-    //   .then(({ data }) => {
-    //     let abilities = [];
-    //     if (data.abilities) {
-    //       for (let i = 0; i < data.abilities.length; i++) {
-    //         abilities.push(data.abilities[i].ability.name);
-    //       }
-    //     }
-    //     let types = [];
-    //     if (data.types) {
-    //       for (let i = 0; i < data.types.length; i++) {
-    //         types.push(data.types[i].type.name);
-    //       }
-    //     }
-    //     setPokemonCardData({
-    //       name: pokemon,
-    //       abilities,
-    //       image: data?.sprites?.front_default,
-    //       types,
-    //     });
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
+    axios
+      .get(`http://localhost:3001/pokemon/${pokemon}`)
+      .then(({ data }) => {
+        setPokemonCardData(data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }, [pokemon]);
   return (
     <>

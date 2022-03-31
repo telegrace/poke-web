@@ -1,0 +1,8 @@
+{
+  "verbose": false,
+  "ignore": ["src/*", "test/*", "serverless/*"],
+  "env": {
+    "TS_NODE_COMPILER_OPTIONS": "{\"module\":\"commonjs\"}",
+    "TS_NODE_TRANSPILE_ONLY": "true"
+  }
+}

@@ -36,35 +36,42 @@ app.get("/ping", (request, reply) => __awaiter(void 0, void 0, void 0, function*
     console.log("GET /ping");
     return "pong\n";
 }));
-app.get("/pokemon", (request, reply) => __awaiter(void 0, void 0, void 0, function* () {
-    axios_1.default
-        .get(`https://pokeapi.co/api/v2/pokemon/pikachu`)
-        .then((response) => {
-        var _a, _b, _c, _d, _e;
-        let abilities = [];
-        if ((_a = response === null || response === void 0 ? void 0 : response.data) === null || _a === void 0 ? void 0 : _a.abilities) {
-            for (let i = 0; i < ((_b = response === null || response === void 0 ? void 0 : response.data) === null || _b === void 0 ? void 0 : _b.abilities.length); i++) {
-                abilities.push(response === null || response === void 0 ? void 0 : response.data.abilities[i].ability.name);
+app.get("/pokemon/:pokemonName", (request, reply) => __awaiter(void 0, void 0, void 0, function* () {
+    const { pokemonName } = request.params;
+    if (typeof pokemonName === "string") {
+        axios_1.default
+            .get(`https://pokeapi.co/api/v2/pokemon/${pokemonName.toLowerCase()}`)
+            .then((response) => {
+            var _a, _b, _c, _d, _e;
+            console.log("response", response);
+            let abilities = [];
+            if ((_a = response === null || response === void 0 ? void 0 : response.data) === null || _a === void 0 ? void 0 : _a.abilities) {
+                for (let i = 0; i < ((_b = response === null || response === void 0 ? void 0 : response.data) === null || _b === void 0 ? void 0 : _b.abilities.length); i++) {
+                    abilities.push(response === null || response === void 0 ? void 0 : response.data.abilities[i].ability.name);
+                }
             }
-        }
-        let types = [];
-        if ((_c = response === null || response === void 0 ? void 0 : response.data) === null || _c === void 0 ? void 0 : _c.types) {
-            for (let i = 0; i < (response === null || response === void 0 ? void 0 : response.data.types.length); i++) {
-                types.push(response === null || response === void 0 ? void 0 : response.data.types[i].type.name);
+            let types = [];
+            if ((_c = response === null || response === void 0 ? void 0 : response.data) === null || _c === void 0 ? void 0 : _c.types) {
+                for (let i = 0; i < (response === null || response === void 0 ? void 0 : response.data.types.length); i++) {
+                    types.push(response === null || response === void 0 ? void 0 : response.data.types[i].type.name);
+                }
             }
-        }
-        let pokemonCardData = {
-            name: "pikachua",
-            abilities,
-            image: (_e = (_d = response === null || response === void 0 ? void 0 : response.data) === null || _d === void 0 ? void 0 : _d.sprites) === null || _e === void 0 ? void 0 : _e.front_default,
-            types,
-        };
-        reply.send(pokemonCardData);
-    })
-        .catch((err) => {
-        console.log(err);
+            let pokemonCardData = {
+                name: pokemonName,
+                abilities,
+                image: (_e = (_d = response === null || response === void 0 ? void 0 : response.data) === null || _d === void 0 ? void 0 : _d.sprites) === null || _e === void 0 ? void 0 : _e.front_default,
+                types,
+            };
+            reply.send(pokemonCardData);
+        })
+            .catch((err) => {
+            console.log(err);
+            reply.statusCode = 500;
+        });
+    }
+    else {
         reply.statusCode = 500;
-    });
+    }
 }));
 app.listen(3001, (err, address) => {
     if (err) {

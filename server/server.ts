@@ -1,9 +1,8 @@
-import fastify from "fastify";
+import fastify, { FastifyReply, FastifyRequest } from "fastify";
 import axios from "axios";
+import { Callback, PokemonNameRequest } from "./types/server";
 
 const app = fastify();
-
-type Callback = (err: Error | null, value?: boolean) => void;
 
 app.register(require("fastify-cors"), {
   // put your options here
@@ -29,35 +28,47 @@ app.get("/ping", async (request, reply) => {
   return "pong\n";
 });
 
-app.get("/pokemon", async (request, reply) => {
-  axios
-    .get(`https://pokeapi.co/api/v2/pokemon/pikachu`)
-    .then((response) => {
-      let abilities = [];
-      if (response?.data?.abilities) {
-        for (let i = 0; i < response?.data?.abilities.length; i++) {
-          abilities.push(response?.data.abilities[i].ability.name);
-        }
-      }
-      let types = [];
-      if (response?.data?.types) {
-        for (let i = 0; i < response?.data.types.length; i++) {
-          types.push(response?.data.types[i].type.name);
-        }
-      }
-      let pokemonCardData = {
-        name: "pikachua",
-        abilities,
-        image: response?.data?.sprites?.front_default,
-        types,
-      };
-      reply.send(pokemonCardData);
-    })
-    .catch((err) => {
-      console.log(err);
+app.get(
+  "/pokemon/:pokemonName",
+  async (
+    request: FastifyRequest<{ Params: { pokemonName: string } }>,
+    reply: FastifyReply
+  ) => {
+    const { pokemonName } = request.params;
+    if (typeof pokemonName === "string") {
+      axios
+        .get(`https://pokeapi.co/api/v2/pokemon/${pokemonName.toLowerCase()}`)
+        .then((response) => {
+          console.log("response", response);
+          let abilities = [];
+          if (response?.data?.abilities) {
+            for (let i = 0; i < response?.data?.abilities.length; i++) {
+              abilities.push(response?.data.abilities[i].ability.name);
+            }
+          }
+          let types = [];
+          if (response?.data?.types) {
+            for (let i = 0; i < response?.data.types.length; i++) {
+              types.push(response?.data.types[i].type.name);
+            }
+          }
+          let pokemonCardData = {
+            name: pokemonName,
+            abilities,
+            image: response?.data?.sprites?.front_default,
+            types,
+          };
+          reply.send(pokemonCardData);
+        })
+        .catch((err) => {
+          console.log(err);
+          reply.statusCode = 500;
+        });
+    } else {
       reply.statusCode = 500;
-    });
-});
+    }
+  }
+);
 
 app.listen(3001, (err, address) => {
   if (err) {
