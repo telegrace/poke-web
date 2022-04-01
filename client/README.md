@@ -2,7 +2,8 @@
 
 - Download the project directory and run `npm i`
 
-- In the project directory run `npm start`
+- First in the server directory run `npm start`
+- Next in the client directory run `npm start`
 
 ### `npm start`
 
