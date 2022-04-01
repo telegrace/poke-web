@@ -1,6 +1,7 @@
 import fastify, { FastifyReply, FastifyRequest } from "fastify";
 import axios from "axios";
-import { Callback, PokemonNameRequest } from "./types/server";
+import { Callback } from "./types/server";
+import jwt from "fastify-jwt";
 
 const app = fastify();
 
@@ -19,7 +20,12 @@ app.register(require("fastify-cors"), {
   },
 });
 
-app.get("/", (req, reply) => {
+app.get("/secret", (req, reply) => {
+  reply.send({ hello: "world" });
+});
+
+app.get("/login", (req, reply) => {
+  //Auth User
   reply.send({ hello: "world" });
 });
 

@@ -29,7 +29,11 @@ app.register(require("fastify-cors"), {
         callback(new Error("Not allowed"));
     },
 });
-app.get("/", (req, reply) => {
+app.get("/secret", (req, reply) => {
+    reply.send({ hello: "world" });
+});
+app.get("/login", (req, reply) => {
+    //Auth User
     reply.send({ hello: "world" });
 });
 app.get("/ping", (request, reply) => __awaiter(void 0, void 0, void 0, function* () {

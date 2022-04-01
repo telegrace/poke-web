@@ -1,4 +1,6 @@
 import React from "react";
+import { useQuery } from "react-query";
+import { getPokemonData } from "../../lib/actions";
 
 type PokemonCardData = {
   name: string;
@@ -8,12 +10,25 @@ type PokemonCardData = {
 };
 
 interface PokemonCardContainerProps {
-  pokemonCardData: PokemonCardData;
+  pokemon: string;
 }
 
 const PokemonCardContainer: React.FC<PokemonCardContainerProps> = ({
-  pokemonCardData,
+  pokemon,
 }) => {
+  const [pokemonCardData, setPokemonCardData] =
+    React.useState<PokemonCardData | null>(null);
+
+  const { isLoading, isError, data } = useQuery("pokemon", () => {
+    getPokemonData(pokemon);
+  });
+
+  React.useEffect(() => {
+    if (data) {
+      setPokemonCardData(data);
+    }
+  }, [pokemon]);
+
   return (
     <div className="flex items-center justify-center bg-white">
       <div className="w-80 rounded-2xl border shadow py-12 px-8 hover:-translate-y-1 hover:shadow-2xl delay-75 duration-100">
@@ -23,7 +38,7 @@ const PokemonCardContainer: React.FC<PokemonCardContainerProps> = ({
 
         <img
           src={pokemonCardData?.image}
-          alt={pokemonCardData.name}
+          alt={pokemonCardData?.name}
           className="w-full h-50"
         />
         <div className="flex text-xl text-gray-700 font-semibold mt-1">
